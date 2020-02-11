@@ -1,8 +1,8 @@
 const express = require('express');
-const app = express();
 const BodyParser = require('body-parser');
-const PORT = 8080;
 const mongoose = require('mongoose');
+const app = express();
+const PORT = 8080;
 
 //Database
 mongoose.connect('mongodb://localhost/Todo');
@@ -12,6 +12,7 @@ mongoose.Promise = global.Promise;
 const Router = require('./routes/routes');
 
 //App use
+app.use(BodyParser.urlencoded({ extended: false }));
 app.use(BodyParser.json());
 app.use(Router);
 

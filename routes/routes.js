@@ -9,7 +9,10 @@ Router.get('/', (req, res) => {
 
 //GET all todos
 Router.get('/todo/:chatID', function (req, res) {
-    todo.find({chat_id: req.params.chatID}, function (err, users) {
+    console.log(req.params)
+    todo.find({
+        chat_id: req.params.chatID
+    }, function (err, users) {
         var userMap = {};
         users.forEach(function (user) {
             userMap[user._id] = [user.todoMessage, user.deadline];
@@ -18,11 +21,28 @@ Router.get('/todo/:chatID', function (req, res) {
     });
 });
 
-//Create Todo
+//Create todo
 Router.post('/todo', (req, res) => {
     todo.create(req.body).then(function (todo) {
         res.send(todo)
     })
 });
+
+//Delete todo by it's name
+Router.delete('/todo/:chatID/:todoMessage', (req, res)=>{
+    todo.deleteOne({
+        chat_id: req.params.chatID ,
+        todoMessage: req.params.todoMessage
+    }, function (err) {
+        if (err)
+            return handleError(err);
+    }).then(()=>{
+        res.json({
+            message: "Successfully deleted!",
+            statusCode: 200
+        })
+    })
+});
+
 
 module.exports = Router;
