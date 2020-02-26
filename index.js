@@ -5,7 +5,9 @@ const app = express();
 const PORT = 8080;
 
 //Database
-mongoose.connect('mongodb://localhost/Todo');
+mongoose.connect('mongodb://mongo:27017/Todo')
+    .then(() => {console.log("Connected to DB")} )
+    .catch(err => console.log(err));
 mongoose.Promise = global.Promise;
 
 // Routes

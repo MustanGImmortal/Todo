@@ -3,13 +3,13 @@ const Router = express.Router();
 const todo = require('../schema/schema');
 
 Router.get('/', (req, res) => {
-    console.log(req);
+    //console.log(req);
     res.send("Hello World")
 });
 
 //GET all todos
 Router.get('/todo/:chatID', function (req, res) {
-    console.log(req.params)
+    //console.log(req.params)
     todo.find({
         chat_id: req.params.chatID
     }, function (err, users) {
@@ -23,6 +23,7 @@ Router.get('/todo/:chatID', function (req, res) {
 
 //Create todo
 Router.post('/todo', (req, res) => {
+    console.log("POST Request Received")
     todo.create(req.body).then(function (todo) {
         res.send(todo)
     })
